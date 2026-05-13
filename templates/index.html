@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Конвертер валют</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+  <div class="label">Фінансовий інструмент</div>
+  <h1>Конвертер <span>Валют</span></h1>
+</header>
+
+<div class="card">
+  <div class="field">
+    <label>Сума</label>
+    <input type="number" id="amount" placeholder="100" min="0.01" step="any" value="100"/>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label>З</label>
+      <select id="from_cur">
+        {% for code, name in currencies.items() %}
+        <option value="{{ code }}" {% if code == 'USD' %}selected{% endif %}>{{ code }} — {{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class="swap-btn" id="swapBtn" title="Поміняти">&#8644;</button>
+    <div class="field">
+      <label>В</label>
+      <select id="to_cur">
+        {% for code, name in currencies.items() %}
+        <option value="{{ code }}" {% if code == 'UAH' %}selected{% endif %}>{{ code }} — {{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <button class="convert-btn" id="convertBtn">Конвертувати</button>
+
+  <div class="error-msg" id="errorMsg"></div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-amount" id="resultAmount"></div>
+    <div class="result-label" id="resultLabel"></div>
+    <div class="result-rate" id="resultRate"></div>
+  </div>
+</div>
+
+<div class="history-section">
+  <div class="history-header">
+    <h2>Історія конвертацій</h2>
+    <button class="clear-btn" id="clearBtn">Очистити</button>
+  </div>
+  <div class="history-list" id="historyList"></div>
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
